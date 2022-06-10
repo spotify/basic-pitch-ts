@@ -1,0 +1,52 @@
+{
+  "name": "@spotify/basic-pitch",
+  "version": "0.0.0-development",
+  "description": "A JS module that takes audio and converts it to MIDI with machine learning",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "license": "Apache-2.0",
+  "types": "types",
+  "files": [
+    "cjs",
+    "esm",
+    "types",
+    "src"
+  ],
+  "scripts": {
+    "test": "web-scripts test",
+    "lint": "web-scripts lint",
+    "build": "web-scripts build",
+    "commit": "web-scripts commit",
+    "release": "web-scripts release",
+    "format": "web-scripts format",
+    "prepublishOnly": "$npm_execpath run build"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "web-scripts commitmsg",
+      "pre-commit": "web-scripts precommit"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@spotify/eslint-config-oss": "^1.0.2",
+    "@spotify/web-scripts": "^13.0.1",
+    "@tensorflow/tfjs-node": "^3.2.0",
+    "@types/jest": "^27.0.0",
+    "@types/node": "^14.14.31",
+    "audio-loader": "^1.0.3",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.1",
+    "midi-writer-js": "^1.7.5",
+    "synth-js": "^0.1.2",
+    "ts-jest": "^27.0.0",
+    "web-audio-api": "^0.2.2"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.2.0",
+    "@tonejs/midi": "^2.0.28"
+  }
+}
