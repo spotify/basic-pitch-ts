@@ -30,7 +30,7 @@ const OUTPUT_TO_TENSOR_NAME = {
 };
 
 // All taken from constants.py
-// https://ghe.spotify.net/miq/audio-to-midi/blob/master/audio_to_midi/constants.py
+// https://github.com/spotify/basic-pitch/blob/main/basic_pitch/constants.py
 const NUM_CHANNELS = 1;
 const AUDIO_SAMPLE_RATE = 22050;
 const FFT_HOP = 256;
