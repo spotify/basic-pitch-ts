@@ -1,6 +1,6 @@
 ![Basic Pitch Logo](https://user-images.githubusercontent.com/213293/167478083-de988de2-9137-4325-8a5f-ceeb51233753.png)
 [![Actions Status](https://github.com/spotify/basic-pitch-ts/workflows/Tests/badge.svg)](https://github.com/spotify/basic-pitch-ts/actions)
-[![Version](https://img.shields.io/npm/v/@spotify/basic-pitch-ts.svg)](https://www.npmjs.com/package/@spotify/basic-pitch-ts)
+[![Version](https://img.shields.io/npm/v/@spotify/basic-pitch.svg)](https://www.npmjs.com/package/@spotify/basic-pitch)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Supported Platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20Windows%20%7C%20Linux-green)
 
