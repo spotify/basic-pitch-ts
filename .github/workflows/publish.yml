@@ -20,9 +20,9 @@ jobs:
       run: yarn test
     - name: build
       run: yarn build
-    # - name: release
-    #   run: yarn release
-    #   env:
-    #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    #     GH_USERNAME: ${{ secrets.GH_USERNAME }}
+    - name: release
+      run: yarn release
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_USERNAME: ${{ secrets.GH_USERNAME }}
