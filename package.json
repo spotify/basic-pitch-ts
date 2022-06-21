@@ -21,6 +21,9 @@
     "format": "web-scripts format",
     "prepublishOnly": "$npm_execpath run build"
   },
+  "release": {
+    "branches": ["main"]
+  },
   "husky": {
     "hooks": {
       "commit-msg": "web-scripts commitmsg",
