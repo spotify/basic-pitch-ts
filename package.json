@@ -10,7 +10,8 @@
     "cjs",
     "esm",
     "types",
-    "src"
+    "src",
+    "model"
   ],
   "scripts": {
     "test": "web-scripts test",
