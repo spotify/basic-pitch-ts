@@ -344,7 +344,7 @@ export function outputToNotesPoly(
   onsets: number[][],
   onsetThresh: number = 0.5,
   frameThresh: number = 0.3,
-  minNoteLen: number = 5,
+  minNoteLen: number = 11,
   inferOnsets: boolean = true,
   maxFreq: Optional<number> = null,
   minFreq: Optional<number> = null,
