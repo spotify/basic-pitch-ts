@@ -61,7 +61,7 @@ import { BasicPitch, noteFramesToTime, addPitchBendsToNoteEvents, outputToNotesP
  * @param audioURL - The URL of the audio file.
  * @param onSuccess - A callback function called when the conversion is successful. It receives an array of note events.
  * @param onError - An optional callback function called if an error occurs during the conversion.
- * @param onProcess - An optional callback function called to get progress percentage value.
+ * @param onProgress - An optional callback function called to get progress percentage value.
  * @param options - Optional detection options.
  * @returns A promise that resolves when the conversion is complete.
  */
