@@ -103,8 +103,8 @@ export default async function audioToNoteEvents(
 
     // Destructure the options with default values
     const {
-      onsetThresh = 5,
-      frameThresh = 3,
+      onsetThresh = 0.5,
+      frameThresh = 0.3,
       minNoteLen = 5,
       inferOnsets = true,
       maxFreq = null,
