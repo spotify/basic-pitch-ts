@@ -50,7 +50,8 @@
     "web-audio-api": "^0.2.2"
   },
   "dependencies": {
-    "@tensorflow/tfjs": "^3.2.0",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-tflite": "^0.0.1-alpha.9",
     "@tonejs/midi": "^2.0.28"
   }
 }

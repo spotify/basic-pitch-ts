@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 import * as tf from '@tensorflow/tfjs';
+import * as tflite from "@tensorflow/tfjs-tflite";
 
-import { NoteEventTime } from './toMidi';
+import type { NoteEventTime } from './toMidi';
 
 export type OnCompleteCallback = (
   frames: number[][],
@@ -46,14 +47,13 @@ const OVERLAP_LENGTH_FRAMES = N_OVERLAPPING_FRAMES * FFT_HOP;
 const HOP_SIZE = AUDIO_N_SAMPLES - OVERLAP_LENGTH_FRAMES;
 
 export class BasicPitch {
-  model: Promise<tf.GraphModel>;
-
+  model: Promise<tf.GraphModel | tflite.TFLiteModel>;
   /**
    * Create Basic Pitch object.
    * @param modelOrModelPath A GraphModel of an already loaded tf.js graph
    * or a URL pointing to tf.js assets.
    */
-  constructor(modelOrModelPath: string | Promise<tf.GraphModel>) {
+  constructor(modelOrModelPath: string | Promise<tf.GraphModel | tflite.TFLiteModel>, type_of_model: "tf" | "tflite" = "tflite") {
     if (OVERLAP_LENGTH_FRAMES % 2 !== 0) {
       throw new Error(
         `OVERLAP_LENGTH_FRAMES is not divisible by 2! Is ${OVERLAP_LENGTH_FRAMES}`,
@@ -62,7 +62,7 @@ export class BasicPitch {
 
     this.model =
       typeof modelOrModelPath === 'string'
-        ? tf.loadGraphModel(modelOrModelPath)
+        ? type_of_model == "tf" ? tf.loadGraphModel(modelOrModelPath) : tflite.loadTFLiteModel(modelOrModelPath)
         : modelOrModelPath;
   }
 
@@ -95,14 +95,14 @@ export class BasicPitch {
   ): Promise<[tf.Tensor3D, tf.Tensor3D, tf.Tensor3D]> {
     const model = await this.model;
     const singleBatch = tf.slice(reshapedInput, batchNumber, 1);
-
-    const results = model.execute(singleBatch, [
-      OUTPUT_TO_TENSOR_NAME.frames,
-      OUTPUT_TO_TENSOR_NAME.onsets,
-      OUTPUT_TO_TENSOR_NAME.contours,
-    ]) as tf.Tensor3D[];
-
-    return [results[0], results[1], results[2]];
+    const results = model instanceof tf.GraphModel
+      ? model.execute(singleBatch as any, [
+        OUTPUT_TO_TENSOR_NAME.frames,
+        OUTPUT_TO_TENSOR_NAME.onsets,
+        OUTPUT_TO_TENSOR_NAME.contours,
+      ]) as tf.Tensor3D[]
+      : model.predict({ 'serving_default_input_2:0': singleBatch.squeeze([2]) } as unknown as any) as Record<string, tf.Tensor3D>;
+    return Array.isArray(results) ? [results[0], results[1], results[2]] : [results['StatefulPartitionedCall:0'], results['StatefulPartitionedCall:1'], results['StatefulPartitionedCall:2']];
   }
 
   /**
@@ -169,14 +169,14 @@ export class BasicPitch {
       if (resampledBuffer.sampleRate !== AUDIO_SAMPLE_RATE) {
         throw new Error(
           `Input audio buffer is not at correct sample rate! ` +
-            `Is ${resampledBuffer.sampleRate}. Should be ${AUDIO_SAMPLE_RATE}`,
+          `Is ${resampledBuffer.sampleRate}. Should be ${AUDIO_SAMPLE_RATE}`,
         );
       }
 
       if (resampledBuffer.numberOfChannels !== NUM_CHANNELS) {
         throw new Error(
           `Input audio buffer is not mono! ` +
-            `Number of channels is ${resampledBuffer.numberOfChannels}. Should be ${NUM_CHANNELS}`,
+          `Number of channels is ${resampledBuffer.numberOfChannels}. Should be ${NUM_CHANNELS}`,
         );
       }
       singleChannelAudioData = resampledBuffer.getChannelData(0);
